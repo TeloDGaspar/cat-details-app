@@ -22,3 +22,5 @@ dependencyResolutionManagement {
 rootProject.name = "sports-sync-app"
 include(":app")
 include(":core")
+include(":feature")
+include(":feature:sportsEvent")
