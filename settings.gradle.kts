@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "sports-sync-app"
 include(":app")
- 
+include(":core")
