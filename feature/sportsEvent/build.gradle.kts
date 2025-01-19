@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.telogaspar.sportsevent"
+    namespace = "com.telogaspar.sports_sync_app.feature.sportsevent"
     compileSdk = 35
 
     defaultConfig {
@@ -14,6 +14,15 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+    }
+
+    buildFeatures {
+        compose = true
+        buildConfig = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.1"
     }
 
     buildTypes {
@@ -35,7 +44,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":core"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -43,6 +51,8 @@ dependencies {
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.material3)
+
+    implementation(project(":core"))
 
     implementation(libs.hilt.navigation.compose)
     implementation(libs.lifecycle.runtime.compose)
