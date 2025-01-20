@@ -9,7 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.telogaspar.sports_sync_app.feature.sportsevent.SportScreen
+import com.telogaspar.sports_sync_app.feature.sportsevent.presentation.compose.SportScreen
 import com.telogaspar.sports_sync_app.ui.theme.SportssyncappTheme
 import dagger.hilt.android.AndroidEntryPoint
 

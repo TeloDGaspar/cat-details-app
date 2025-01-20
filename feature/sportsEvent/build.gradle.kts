@@ -60,6 +60,8 @@ dependencies {
     implementation(libs.retrofit.gson)
     implementation(libs.okhttp.logging.interceptor)
     implementation(libs.hilt.android)
+    implementation(libs.datasource)
+    implementation(libs.icons)
 
     ksp(libs.hilt.compiler)
 

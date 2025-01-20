@@ -1,4 +1,4 @@
-package com.telogaspar.core.presentation
+package com.telogaspar.core.presentation.viewModel
 
 sealed class UiState<out T> {
     data object Loading : UiState<Nothing>()

@@ -5,7 +5,8 @@ import java.util.Date
 data class Sports(
     val sportId: String,
     val sportName: String,
-    val events: List<Event>
+    val events: List<Event>,
+    val isFavorite: Boolean = false
 )
 
 data class Event(
