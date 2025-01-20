@@ -1,6 +1,6 @@
 package com.telogaspar.sports_sync_app.feature.sportsevent.domain.usecase
 
-import com.telogaspar.sports_sync_app.feature.sportsevent.domain.CountDownTimer
+import com.telogaspar.sports_sync_app.feature.sportsevent.domain.entity.CountDownTimer
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.flow.first

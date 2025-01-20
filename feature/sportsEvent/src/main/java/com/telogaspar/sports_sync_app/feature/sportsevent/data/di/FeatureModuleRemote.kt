@@ -32,26 +32,26 @@ object FeatureModuleRemote {
 
     @Provides
     @Singleton
-    fun providePreferencesRepository(dataStore: DataStore<Preferences>): FavoriteListLocalDataSource {
+    internal fun providePreferencesRepository(dataStore: DataStore<Preferences>): FavoriteListLocalDataSource {
         return FavoriteListLocalDataSourceImpl(dataStore)
     }
 
     @Provides
     @Singleton
-    fun provideFeatureApiService(retrofit: Retrofit): SportsEventApi {
+    internal fun provideFeatureApiService(retrofit: Retrofit): SportsEventApi {
         return retrofit.create(SportsEventApi::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideSportsEventListRemoteDataSource(
+    internal fun provideSportsEventListRemoteDataSource(
         sportsEventApi: SportsEventApi
     ): SportsEventListRemoteDataSource = SportsEventListRemoteDataSourceImpl(sportsEventApi)
 
 
     @Provides
     @Singleton
-    fun provideSportListRepository(
+    internal fun provideSportListRepository(
         remoteDataSource: SportsEventListRemoteDataSource, dataStore: DataStore<Preferences>
     ): SportListRepository = SportListRepositoryImpl(
         remoteDataSource = remoteDataSource,

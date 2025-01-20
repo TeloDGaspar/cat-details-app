@@ -1,7 +1,8 @@
 package com.telogaspar.sports_sync_app.feature.sportsevent.domain.di
 
-import com.telogaspar.sports_sync_app.feature.sportsevent.domain.repository.FavoriteListLocalDataSource
 import com.telogaspar.sports_sync_app.feature.sportsevent.domain.repository.SportListRepository
+import com.telogaspar.sports_sync_app.feature.sportsevent.domain.usecase.FetchFavoriteEventListUseCase
+import com.telogaspar.sports_sync_app.feature.sportsevent.domain.usecase.FetchFavoriteSportListUseCase
 import com.telogaspar.sports_sync_app.feature.sportsevent.domain.usecase.FetchSportsListUseCase
 import com.telogaspar.sports_sync_app.feature.sportsevent.domain.usecase.RemoveEventFavoriteUseCase
 import com.telogaspar.sports_sync_app.feature.sportsevent.domain.usecase.RemoveSportFavoriteUseCase
@@ -24,14 +25,15 @@ object DomainModule {
     @Singleton
     fun provideUseCases(
         repositorySports: SportListRepository,
-        repositoryPreferences: FavoriteListLocalDataSource
     ): SportsFacade {
         return SportsFacade(
             fetchSportsListUseCase = FetchSportsListUseCase(repositorySports),
-            saveEventFavoriteUseCase = SaveEventFavoriteUseCase(repositoryPreferences),
-            removeEventFavoriteUseCase = RemoveEventFavoriteUseCase(repositoryPreferences),
-            saveSportFavoriteUseCase = SaveSportFavoriteUseCase(repositoryPreferences),
-            removeSportFavoriteUseCase = RemoveSportFavoriteUseCase(repositoryPreferences)
+            fetchFavoriteSportListUseCase = FetchFavoriteSportListUseCase(repositorySports),
+            fetchFavoriteEventListUseCase = FetchFavoriteEventListUseCase(repositorySports),
+            saveEventFavoriteUseCase = SaveEventFavoriteUseCase(repositorySports),
+            removeEventFavoriteUseCase = RemoveEventFavoriteUseCase(repositorySports),
+            saveSportFavoriteUseCase = SaveSportFavoriteUseCase(repositorySports),
+            removeSportFavoriteUseCase = RemoveSportFavoriteUseCase(repositorySports)
         )
     }
 

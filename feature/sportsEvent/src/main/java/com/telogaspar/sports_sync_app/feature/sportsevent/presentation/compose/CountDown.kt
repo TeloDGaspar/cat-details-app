@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.telogaspar.sports_sync_app.feature.sportsevent.domain.CountDownTimer
+import com.telogaspar.sports_sync_app.feature.sportsevent.domain.entity.CountDownTimer
 import kotlinx.coroutines.launch
 
 @Composable
@@ -22,7 +22,7 @@ fun CountDown(
     textAlign: TextAlign,
     updateInterval: Long = 1
 ) {
-    val countDownTimer = remember { CountDownTimer(timeStamp, updateInterval) }
+    val countDownTimer = remember(timeStamp) { CountDownTimer(timeStamp, updateInterval) }
     val remainingTime by countDownTimer.remainingTime.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {

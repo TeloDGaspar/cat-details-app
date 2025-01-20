@@ -1,5 +1,6 @@
 package com.telogaspar.sports_sync_app.feature.sportsevent.presentation.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.telogaspar.core.R
@@ -27,6 +28,8 @@ class SportsListViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<UiState<List<Sports>>>(UiState.Loading)
     val uiState: StateFlow<UiState<List<Sports>>> = _uiState
 
+    private val _listSports: ArrayList<Sports> = arrayListOf()
+
     fun fetchSports() {
         viewModelScope.launch(dispatcher) {
             useCase.fetchSportsListUseCase().onStart {
@@ -40,7 +43,8 @@ class SportsListViewModel @Inject constructor(
     }
 
     private fun handleSportsSuccess(sports: List<Sports>) {
-        _uiState.value = UiState.Success(sports)
+        _listSports.addAll(sports)
+        filterSport()
     }
 
     private fun handleError(error: Throwable) {
@@ -50,7 +54,7 @@ class SportsListViewModel @Inject constructor(
     fun updateEvent(event: Event) {
         viewModelScope.launch(dispatcher) {
             val eventId = event.eventId
-            val isFavorite = event.isFavorite
+            val isFavorite = !event.isFavorite
 
             if (isFavorite) {
                 useCase.saveEventFavoriteUseCase(eventId)
@@ -58,54 +62,68 @@ class SportsListViewModel @Inject constructor(
                 useCase.removeEventFavoriteUseCase(eventId)
             }
 
-            _uiState.update { uiState ->
-                when (uiState) {
-                    is UiState.Success -> {
+            useCase.fetchFavoriteEventListUseCase().collect { event ->
+                _uiState.update { uiState ->
+                    if (uiState is UiState.Success) {
+                        val sportList : ArrayList<Sports> = arrayListOf()
                         val updatedSportsList = uiState.result?.map { sport ->
-                            sport.copy(events = sport.events.map { existingEvent ->
-                                if (existingEvent.eventId == eventId) {
-                                    existingEvent.copy(isFavorite = isFavorite)
+                            val eventsList : ArrayList<Event> = arrayListOf()
+                            sport.events.forEach { itemEvent ->
+                                if (event.contains(itemEvent.eventId)) {
+                                    eventsList.add(itemEvent.copy(isFavorite = isFavorite))
                                 } else {
-                                    existingEvent
+                                    eventsList.add(itemEvent)
                                 }
-                            })
+                            }
+                            sportList.add(sport.copy(events = eventsList))
+                            sport
                         }
+                        Log.i("UpdateEvent", "Updated Sports List: $updatedSportsList")
                         UiState.Success(updatedSportsList)
+                    } else {
+                        uiState
                     }
-                    else -> uiState
                 }
             }
+
         }
     }
 
     fun updateSport(sport: Sports) {
         viewModelScope.launch(dispatcher) {
             val sportId = sport.sportId
-            val isFavorite = sport.isFavorite
+            val isFavorite = !sport.isFavorite
 
             if (isFavorite) {
                 useCase.saveSportFavoriteUseCase(sportId)
             } else {
                 useCase.removeSportFavoriteUseCase(sportId)
             }
+            filterSport()
 
-            _uiState.update { uiState ->
-                when (uiState) {
-                    is UiState.Success -> {
-                        val updatedSportsList = uiState.result?.map { existingSport ->
-                            if (existingSport.sportId == sportId) {
-                                existingSport.copy(isFavorite = isFavorite)
-                            } else {
-                                existingSport
-                            }
-                        }
-                        UiState.Success(updatedSportsList)
-                    }
-                    else -> uiState
-                }
-            }
         }
     }
+
+    private fun filterSport() {
+        viewModelScope.launch(dispatcher) {
+            useCase.fetchFavoriteSportListUseCase().collect { sports ->
+                val filterList: ArrayList<Sports> = arrayListOf()
+                _listSports.forEach { sport ->
+                    if (sports.contains(sport.sportId)) {
+                        val test = sport.events.filter { it.isFavorite }
+                        val sportEvensFilter = sport.copy(events = test, isFavorite = true)
+                        filterList.add(sportEvensFilter)
+                    } else {
+
+                        filterList.add(sport.copy(isFavorite = false))
+                    }
+                }
+                _uiState.value = UiState.Success(filterList)
+            }
+        }
+
+    }
+
 
     private fun getErrorMessage(error: Throwable): Int {
         return when (error) {

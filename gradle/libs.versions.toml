@@ -64,6 +64,7 @@ mockk-android = { module = "io.mockk:mockk", version.ref = "mockk-version" }
 datasource = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datasource-version" }
 icons = {group = "androidx.compose.material", name = "material-icons-extended", version.ref = "icons-version"}
 
+
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

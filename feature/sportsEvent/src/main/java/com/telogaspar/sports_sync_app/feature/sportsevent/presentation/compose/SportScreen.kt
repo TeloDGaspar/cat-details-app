@@ -71,6 +71,7 @@ import androidx.compose.material.icons.filled.SportsHockey
 import androidx.compose.material.icons.filled.SportsTennis
 import androidx.compose.material.icons.filled.SportsVolleyball
 import androidx.compose.material.icons.filled.Sports
+import androidx.compose.ui.platform.testTag
 
 import com.telogaspar.sports_sync_app.feature.sportsevent.R
 import com.telogaspar.sports_sync_app.feature.sportsevent.domain.entity.Event
@@ -87,10 +88,10 @@ fun SportScreen(viewModel: SportsListViewModel = hiltViewModel()) {
     SportsContent(
         sportsState = sportsUiState,
         onToggleFavorite = { event ->
-            viewModel.updateEvent(event.copy(isFavorite = !event.isFavorite))
+            viewModel.updateEvent(event)
         },
         onToggleFavoriteSports = { sports ->
-            viewModel.updateSport(sports.copy(isFavorite = !sports.isFavorite))
+            viewModel.updateSport(sports)
         },
         onRetry = { viewModel.fetchSports() })
 }
@@ -102,7 +103,7 @@ fun SportsContent(
     onToggleFavoriteSports: (Sports) -> Unit,
     onRetry: () -> Unit,
 ) {
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = Modifier.fillMaxSize().testTag("main_screen")) {
         when (sportsState) {
             is UiState.Loading -> {
                 SportsLoading()
@@ -189,69 +190,14 @@ fun SportItem(
             }
         }
 
-
         if (isExpanded) {
-            val eventsToDisplay = if (sport.isFavorite) {
-                sport.events.filter { it.isFavorite }
-            } else {
-                sport.events
-            }
             EventColumn(
                 sport,
-                eventsToDisplay,
+                sport.events,
                 toggleFavorite = { event ->
                     onToggleFavorite(event)
                 })
-            /*EventGrid(events = eventsToDisplay, toggleFavorite = { event ->
-                onToggleFavorite(event)
-            })*/
         }
-    }
-}
-
-@Composable
-fun EventGrid(events: List<Event>, toggleFavorite: (Event) -> Unit) {
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(4), // Maximum of 4 columns
-        modifier = Modifier
-            .height(400.dp)
-            .background(Color(0xFF343434), shape = RoundedCornerShape(8.dp))
-            .padding(8.dp),
-        contentPadding = PaddingValues(8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        items(events) { event ->
-            EventItem(event, toggleFavorite)
-        }
-    }
-}
-
-@Composable
-fun EventItem(event: Event, toggleFavorite: (Event) -> Unit) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        CountDown(
-            modifier = Modifier.padding(4.dp),
-            timeStamp = event.eventStartTime,
-            color = Color.White,
-            style = MaterialTheme.typography.bodySmall,
-            textAlign = TextAlign.Center
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        FavoriteSwitch(checked = event.isFavorite, toggleFavorite = { toggleFavorite(event) })
-        Spacer(modifier = Modifier.height(8.dp))
-        EventText(
-            eventName = event.eventName,
-            color = Color.White,
-            style = MaterialTheme.typography.bodySmall,
-            textAlign = TextAlign.Center
-        )
     }
 }
 
@@ -328,7 +274,7 @@ fun getSportIcon(sportName: String): ImageVector {
     return when (sportName.lowercase()) {
         "soccer", "futsal" -> Icons.Default.SportsSoccer
         "basketball" -> Icons.Default.SportsBasketball
-        "tennis" ,"tabletennis" -> Icons.Default.SportsTennis
+        "tennis", "tabletennis" -> Icons.Default.SportsTennis
         "football" -> Icons.Default.SportsFootball
         "baseball" -> Icons.Default.SportsBaseball
         "hockey", "icehockey" -> Icons.Default.SportsHockey

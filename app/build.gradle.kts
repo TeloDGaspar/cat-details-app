@@ -77,5 +77,8 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.retrofit) //TODO REMOVE AFTER TEST
 
+    androidTestImplementation(libs.hilt.android.testing)
+    androidTestImplementation(libs.androidx.ui.test.junit4)
+    debugImplementation(libs.androidx.ui.test.manifest)
 
 }

@@ -38,4 +38,16 @@ internal class SportListRepositoryImpl(
             emit(sportsList)
         }
     }
+
+    override suspend fun saveFavorite(eventId: String, type: Type) {
+        localDataSource.saveFavorite(eventId, type)
+    }
+
+    override suspend fun removeFavorite(eventId: String, type: Type) {
+        localDataSource.removeFavorite(eventId, type)
+    }
+
+    override fun getFavorite(type: Type): Flow<Set<String>> {
+        return localDataSource.getFavorite(type)
+    }
 }

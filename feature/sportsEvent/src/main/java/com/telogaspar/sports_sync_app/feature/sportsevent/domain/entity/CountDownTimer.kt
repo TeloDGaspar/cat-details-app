@@ -1,4 +1,4 @@
-package com.telogaspar.sports_sync_app.feature.sportsevent.domain
+package com.telogaspar.sports_sync_app.feature.sportsevent.domain.entity
 
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow

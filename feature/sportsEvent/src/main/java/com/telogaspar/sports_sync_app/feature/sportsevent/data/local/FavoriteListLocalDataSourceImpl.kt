@@ -9,7 +9,7 @@ import com.telogaspar.sports_sync_app.feature.sportsevent.domain.repository.Type
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class FavoriteListLocalDataSourceImpl(
+internal class FavoriteListLocalDataSourceImpl(
     private val dataStore: DataStore<Preferences>
 ) : FavoriteListLocalDataSource {
 
