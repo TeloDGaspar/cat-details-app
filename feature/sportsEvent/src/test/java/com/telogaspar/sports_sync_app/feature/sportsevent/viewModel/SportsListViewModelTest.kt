@@ -3,16 +3,20 @@ package com.telogaspar.sports_sync_app.feature.sportsevent.viewModel
 import com.telogaspar.core.presentation.viewModel.UiState
 import com.telogaspar.sports_sync_app.feature.sportsevent.domain.entity.Event
 import com.telogaspar.sports_sync_app.feature.sportsevent.domain.entity.Sports
+import com.telogaspar.sports_sync_app.feature.sportsevent.domain.exception.SportsNotFoundException
 import com.telogaspar.sports_sync_app.feature.sportsevent.domain.usecase.SportsFacade
 import com.telogaspar.sports_sync_app.feature.sportsevent.presentation.viewmodel.SportsListViewModel
 import com.telogaspar.sports_sync_app.feature.sportsevent.util.SportsListTestHelper.mockedSportsListViewModel
 import io.mockk.MockKAnnotations
+import com.telogaspar.core.R
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -20,8 +24,10 @@ import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
+import java.io.IOException
 
 @ExperimentalCoroutinesApi
 class SportsListViewModelTest {
@@ -52,8 +58,6 @@ class SportsListViewModelTest {
 
         // WHEN
         viewModel.fetchSports()
-
-        // Allow coroutines to run and collect the state
         advanceUntilIdle()
 
         // THEN
@@ -144,6 +148,73 @@ class SportsListViewModelTest {
 
         // THEN
         coVerify { useCase.saveEventFavoriteUseCase(event.eventId) }
+        delay(5000)
+        job.cancel()
+    }
+
+    @Test
+    fun `handleError sets correct error message for SportsNotFoundException`() = runTest {
+        // GIVEN
+        val expectedErrorMessage = R.string.sports_not_found_error
+        coEvery { useCase.fetchSportsListUseCase() } returns flow {throw SportsNotFoundException()}
+
+        //WHEN
+        viewModel.fetchSports()
+        advanceUntilIdle()
+
+        // THEN
+        val job = launch(testDispatcher) {
+            viewModel.uiState.collect { uiState ->
+                if (uiState is UiState.Error) {
+                    assertEquals(expectedErrorMessage, uiState.errorMessage)
+                }
+            }
+        }
+        delay(5000)
+        job.cancel()
+    }
+
+    @Test
+    fun `handleError sets correct error message for IOException`() = runTest {
+        // GIVEN
+        val expectedErrorMessage = R.string.network_error
+        coEvery { useCase.fetchSportsListUseCase() } returns flow {throw IOException()}
+
+
+        // WHEN
+        viewModel.fetchSports()
+        advanceUntilIdle()
+
+        val job = launch(testDispatcher) {
+            viewModel.uiState.collect { uiState ->
+                if (uiState is UiState.Error) {
+                    assertEquals(expectedErrorMessage, uiState.errorMessage)
+                }
+            }
+        }
+        delay(5000)
+        job.cancel()
+    }
+
+    @Test
+    fun `handleError sets correct error message for unexpected error`() = runTest {
+        // GIVEN
+        val expectedErrorMessage = R.string.unexpected_error
+        coEvery { useCase.fetchSportsListUseCase() } returns flow {throw Exception()}
+
+
+        // WHEN
+        viewModel.fetchSports()
+        advanceUntilIdle()
+
+        // THEN
+        val job = launch(testDispatcher) {
+            viewModel.uiState.collect { uiState ->
+                if (uiState is UiState.Error) {
+                    assertEquals(expectedErrorMessage, uiState.errorMessage)
+                }
+            }
+        }
         delay(5000)
         job.cancel()
     }

@@ -3,5 +3,4 @@ package com.telogaspar.sports_sync_app.feature.sportsevent.data.local
 import android.content.Context
 import androidx.datastore.preferences.preferencesDataStore
 
-// Define a DataStore property delegate in an extension file
 val Context.favoritesDataStore by preferencesDataStore(name = "favorites")

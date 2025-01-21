@@ -8,11 +8,3 @@ data class Sports(
     val events: List<Event>,
     val isFavorite: Boolean = false
 )
-
-data class Event(
-    val eventId: String,
-    val sportID: String,
-    val eventName: String,
-    val eventStartTime: Long, //unix time
-    val isFavorite: Boolean = false
-)

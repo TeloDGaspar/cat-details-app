@@ -21,18 +21,8 @@ open class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             SportssyncappTheme {
-                // A surface container using the 'background' color from the theme
                 SportScreen()
             }
         }
     }
-}
-
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
 }

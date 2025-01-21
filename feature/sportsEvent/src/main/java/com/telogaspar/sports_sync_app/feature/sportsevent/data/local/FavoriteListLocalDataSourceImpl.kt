@@ -4,8 +4,8 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringSetPreferencesKey
+import com.telogaspar.sports_sync_app.feature.sportsevent.domain.entity.Type
 import com.telogaspar.sports_sync_app.feature.sportsevent.domain.repository.FavoriteListLocalDataSource
-import com.telogaspar.sports_sync_app.feature.sportsevent.domain.repository.Type
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

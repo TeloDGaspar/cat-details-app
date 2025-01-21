@@ -1,6 +1,7 @@
 package com.telogaspar.sports_sync_app.feature.sportsevent.domain.repository
 
 import com.telogaspar.sports_sync_app.feature.sportsevent.domain.entity.Sports
+import com.telogaspar.sports_sync_app.feature.sportsevent.domain.entity.Type
 import kotlinx.coroutines.flow.Flow
 
 interface SportListRepository {

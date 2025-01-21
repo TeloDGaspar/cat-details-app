@@ -3,15 +3,12 @@ package com.telogaspar.sports_sync_app.feature.sportsevent.data.repository
 import com.telogaspar.sports_sync_app.feature.sportsevent.data.mapper.EventMapper
 import com.telogaspar.sports_sync_app.feature.sportsevent.data.remote.SportsEventListRemoteDataSource
 import com.telogaspar.sports_sync_app.feature.sportsevent.domain.entity.Sports
+import com.telogaspar.sports_sync_app.feature.sportsevent.domain.entity.Type
 import com.telogaspar.sports_sync_app.feature.sportsevent.domain.exception.SportsNotFoundException
 import com.telogaspar.sports_sync_app.feature.sportsevent.domain.repository.FavoriteListLocalDataSource
 import com.telogaspar.sports_sync_app.feature.sportsevent.domain.repository.SportListRepository
-import com.telogaspar.sports_sync_app.feature.sportsevent.domain.repository.Type
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.forEach
-import kotlinx.coroutines.flow.map
 
 
 internal class SportListRepositoryImpl(
