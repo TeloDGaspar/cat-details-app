@@ -16,7 +16,8 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.telogaspar.sports_sync_app.CustomTestRunner"
+
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -63,8 +64,7 @@ dependencies {
     implementation(project(":feature:sportsEvent"))
     implementation(project(":core"))
 
-    implementation(libs.hilt.navigation.compose)
-
+    implementation(libs.androidx.runner)
     ksp(libs.hilt.compiler)
 
     testImplementation(libs.junit)
@@ -75,10 +75,12 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     implementation(libs.hilt.android)
-    implementation(libs.retrofit) //TODO REMOVE AFTER TEST
 
     androidTestImplementation(libs.hilt.android.testing)
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.test.manifest)
+    kspAndroidTest(libs.hilt.android.compiler)
 
+    implementation(libs.hilt.android.testing)
+    ksp(libs.hilt.android.compiler)
 }

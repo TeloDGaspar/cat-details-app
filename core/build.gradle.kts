@@ -22,6 +22,7 @@ android {
     }
 
 
+
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
     }
@@ -33,8 +34,15 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "BASE_URL_API", "\"https://ios-kaizen.github.io/MockSports/\"")
+        }
+
+        debug {
+            isMinifyEnabled = false
+            buildConfigField("String", "BASE_URL_API", "\"https://ios-kaizen.github.io/MockSports/\"")
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8

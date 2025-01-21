@@ -1,6 +1,7 @@
 package com.telogaspar.core.data.di
 
 import android.util.Log
+import com.telogaspar.core.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,7 +23,7 @@ object CoreModuleRemote {
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .client(okHttpClient)
-            .baseUrl("https://ios-kaizen.github.io/MockSports/")
+            .baseUrl(BuildConfig.BASE_URL_API)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }

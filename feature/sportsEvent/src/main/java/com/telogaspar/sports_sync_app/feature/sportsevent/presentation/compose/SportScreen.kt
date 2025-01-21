@@ -1,7 +1,5 @@
 package com.telogaspar.sports_sync_app.feature.sportsevent.presentation.compose
 
-import android.util.Log
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,25 +12,26 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material.icons.filled.Sports
 import androidx.compose.material.icons.filled.SportsBaseball
+import androidx.compose.material.icons.filled.SportsBasketball
+import androidx.compose.material.icons.filled.SportsCricket
+import androidx.compose.material.icons.filled.SportsFootball
+import androidx.compose.material.icons.filled.SportsGolf
+import androidx.compose.material.icons.filled.SportsHandball
+import androidx.compose.material.icons.filled.SportsHockey
+import androidx.compose.material.icons.filled.SportsSoccer
+import androidx.compose.material.icons.filled.SportsTennis
+import androidx.compose.material.icons.filled.SportsVolleyball
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -44,36 +43,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.capitalize
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.telogaspar.core.presentation.viewModel.UiState
 import com.telogaspar.core.presentation.compose.RetryButton
-import androidx.compose.material.icons.filled.SportsSoccer
-import androidx.compose.material.icons.filled.SportsBasketball
-import androidx.compose.material.icons.filled.SportsCricket
-import androidx.compose.material.icons.filled.SportsFootball
-import androidx.compose.material.icons.filled.SportsGolf
-import androidx.compose.material.icons.filled.SportsHandball
-import androidx.compose.material.icons.filled.SportsHockey
-import androidx.compose.material.icons.filled.SportsTennis
-import androidx.compose.material.icons.filled.SportsVolleyball
-import androidx.compose.material.icons.filled.Sports
-import androidx.compose.ui.platform.testTag
-
-import com.telogaspar.sports_sync_app.feature.sportsevent.R
+import com.telogaspar.core.presentation.viewModel.UiState
 import com.telogaspar.sports_sync_app.feature.sportsevent.domain.entity.Event
 import com.telogaspar.sports_sync_app.feature.sportsevent.domain.entity.Sports
 import com.telogaspar.sports_sync_app.feature.sportsevent.presentation.viewmodel.SportsListViewModel
@@ -103,7 +82,11 @@ fun SportsContent(
     onToggleFavoriteSports: (Sports) -> Unit,
     onRetry: () -> Unit,
 ) {
-    Box(modifier = Modifier.fillMaxSize().testTag("main_screen")) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .testTag("sport_screen")
+    ) {
         when (sportsState) {
             is UiState.Loading -> {
                 SportsLoading()
@@ -161,6 +144,7 @@ fun SportItem(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
+            .testTag("sport_item_${sport.sportName}")
     ) {
         Row(
             modifier = Modifier
@@ -179,10 +163,11 @@ fun SportItem(
                 )
             )
             Spacer(modifier = Modifier.weight(1f))
-            FavoriteSwitch(checked = sport.isFavorite,
+            FavoriteSwitch(modifier = Modifier.testTag("sport_favorite_${sport.sportName}"),
+                checked = sport.isFavorite,
                 toggleFavorite = { onToggleFavoriteSports(sport) })
 
-            IconButton(onClick = { isExpanded = !isExpanded }) {
+            IconButton(modifier = Modifier.testTag("arrow_${sport.sportName}"),onClick = { isExpanded = !isExpanded }) {
                 Icon(
                     imageVector = if (isExpanded) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
                     contentDescription = null
@@ -212,15 +197,16 @@ fun EventColumn(sport: Sports, events: List<Event>, toggleFavorite: (Event) -> U
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         items(events) { event ->
-            EventItem2(sport, event, toggleFavorite)
+            EventItem(sport, event, toggleFavorite)
         }
     }
 }
 
 
 @Composable
-fun EventItem2(sport: Sports, event: Event, toggleFavorite: (Event) -> Unit) {
+fun EventItem(sport: Sports, event: Event, toggleFavorite: (Event) -> Unit) {
     Row(
+        modifier = Modifier.testTag("event_item_${event.eventName}"),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -239,6 +225,7 @@ fun EventItem2(sport: Sports, event: Event, toggleFavorite: (Event) -> Unit) {
                 .weight(1f)
         ) {
             EventText(
+                modifier = Modifier.testTag("event_name_${event.eventName}"),
                 eventName = event.eventName,
                 color = Color(0xFF141414),
                 style = TextStyle(
@@ -250,7 +237,9 @@ fun EventItem2(sport: Sports, event: Event, toggleFavorite: (Event) -> Unit) {
                 textAlign = TextAlign.Start
             )
             CountDown(
+                modifier = Modifier.testTag("event_time_${event.eventName}"),
                 timeStamp = event.eventStartTime,
+                eventId = event.eventId,
                 color = Color(0xFF3D4D5C),
                 style = TextStyle(
                     fontSize = 14.sp,
@@ -262,6 +251,7 @@ fun EventItem2(sport: Sports, event: Event, toggleFavorite: (Event) -> Unit) {
             )
         }
         FavoriteSwitch(modifier = Modifier
+            .testTag("sport_favorite_${event.eventName}")
             .padding(1.dp)
             .width(24.dp)
             .height(24.dp),

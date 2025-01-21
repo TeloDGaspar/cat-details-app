@@ -22,20 +22,10 @@ internal class SportListRepositoryImpl(
     override fun fetchSportList(): Flow<List<Sports>> {
         return flow {
             val sportsResponse = remoteDataSource.fetchSportsEventList()
-            val favoriteSports = localDataSource.getFavorite(Type.FAVORITE_SPORTS).first()
-            val favoriteEvents = localDataSource.getFavorite(Type.FAVORITE_EVENTS).first()
-            val sportsList = mapper.map(sportsResponse).map { sports ->
-                sports.copy(
-                    isFavorite = favoriteSports.contains(sports.sportId),
-                    events = sports.events.map { event ->
-                        event.copy(isFavorite = favoriteEvents.contains(event.eventId))
-                    }
-                )
-            }
             if (sportsResponse.isEmpty()) {
                 throw SportsNotFoundException()
             }
-            emit(sportsList)
+            emit(mapper.map(sportsResponse))
         }
     }
 

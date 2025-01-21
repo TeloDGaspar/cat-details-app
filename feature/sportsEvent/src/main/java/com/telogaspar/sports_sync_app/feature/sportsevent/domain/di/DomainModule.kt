@@ -36,10 +36,4 @@ object DomainModule {
             removeSportFavoriteUseCase = RemoveSportFavoriteUseCase(repositorySports)
         )
     }
-
-    @Provides
-    @Singleton
-    fun provideDispatcher(): CoroutineDispatcher {
-        return Dispatchers.IO
-    }
 }

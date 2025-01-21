@@ -17,19 +17,21 @@ import kotlinx.coroutines.launch
 fun CountDown(
     modifier: Modifier = Modifier,
     timeStamp: Long,
+    eventId: String,
     color: Color,
     style: TextStyle,
     textAlign: TextAlign,
     updateInterval: Long = 1
 ) {
-    val countDownTimer = remember(timeStamp) { CountDownTimer(timeStamp, updateInterval) }
+    val countDownTimer = remember(eventId) { CountDownTimer(timeStamp, updateInterval) }
     val remainingTime by countDownTimer.remainingTime.collectAsStateWithLifecycle()
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(eventId) {
         launch {
             countDownTimer.start()
         }
     }
+
     val text =
         if (remainingTime <= 0) "Event already started" else remainingTime.formatUnixTimeToHHMMSS()
     Text(modifier = modifier, text = text, color = color, style = style, textAlign = textAlign)

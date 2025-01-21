@@ -27,6 +27,8 @@ ksp-version = "1.9.0-1.0.13"
 coroutines-version = '1.8.1'
 datasource-version = '1.1.2'
 icons-version = "1.7.6"
+runner = "1.6.2"
+espressoCoreVersion = "3.6.1"
 
 
 [libraries]
@@ -63,6 +65,8 @@ mockk-android = { module = "io.mockk:mockk", version.ref = "mockk-version" }
 
 datasource = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datasource-version" }
 icons = {group = "androidx.compose.material", name = "material-icons-extended", version.ref = "icons-version"}
+androidx-runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCoreVersion" }
 
 
 [plugins]
