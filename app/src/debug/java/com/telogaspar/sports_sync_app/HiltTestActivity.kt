@@ -5,9 +5,6 @@ package com.telogaspar.sports_sync_app
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.compose.ui.platform.ComposeView
-import com.telogaspar.sports_sync_app.feature.sportsevent.presentation.compose.SportScreen
-import com.telogaspar.sports_sync_app.ui.theme.SportssyncappTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 /**

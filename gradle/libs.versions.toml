@@ -10,6 +10,7 @@ activityCompose = "1.9.1"
 composeBom = "2023.08.00"
 appcompat = "1.7.0"
 material = "1.12.0"
+room = "2.6.1"
 
 lifecycle-runtime-compose-version = "2.8.7"
 
@@ -29,6 +30,10 @@ icons-version = "1.7.6"
 runner = "1.6.2"
 espressoCoreVersion = "3.6.1"
 
+coil = "2.3.0"
+navigation-compose = "2.7.5"
+roomCommon = "2.6.1"
+roomKtx = "2.6.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -63,6 +68,13 @@ mockk-android = { module = "io.mockk:mockk", version.ref = "mockk-version" }
 datasource = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datasource-version" }
 icons = {group = "androidx.compose.material", name = "material-icons-extended", version.ref = "icons-version"}
 androidx-runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
+
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation-compose" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+androidx-room-common = { module = "androidx.room:room-common", version.ref = "room" }
 
 
 [plugins]

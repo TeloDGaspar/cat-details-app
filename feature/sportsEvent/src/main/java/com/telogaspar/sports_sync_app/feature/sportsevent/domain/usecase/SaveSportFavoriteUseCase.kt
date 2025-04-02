@@ -7,5 +7,4 @@ class SaveSportFavoriteUseCase(private val repository: SportListRepository) {
     suspend operator fun invoke(sportId: String) {
         repository.saveFavorite(sportId, Type.FAVORITE_SPORTS)
     }
-
 }

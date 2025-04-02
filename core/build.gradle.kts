@@ -21,8 +21,6 @@ android {
         buildConfig = true
     }
 
-
-
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
     }
@@ -34,12 +32,14 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "BASE_URL_API", "\"https://ios-kaizen.github.io/MockSports/\"")
+            buildConfigField("String", "BASE_URL_API", "\"https://api.thecatapi.com/\"")
+            buildConfigField("String", "CAT_API_KEY", "\"${project.properties["CAT_API_KEY"]}\"")
         }
 
         debug {
             isMinifyEnabled = false
-            buildConfigField("String", "BASE_URL_API", "\"https://ios-kaizen.github.io/MockSports/\"")
+            buildConfigField("String", "BASE_URL_API", "\"https://api.thecatapi.com/\"")
+            buildConfigField("String", "CAT_API_KEY", "\"${project.properties["CAT_API_KEY"]}\"")
         }
     }
 

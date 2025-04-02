@@ -19,7 +19,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "sports-sync-app"
+rootProject.name = "cat-details-app"
 include(":app")
 include(":core")
 include(":feature")

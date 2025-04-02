@@ -62,8 +62,13 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.datasource)
     implementation(libs.icons)
-
+    implementation(libs.coil.compose)
+    implementation(libs.androidx.room.common)
+    implementation(libs.androidx.room.ktx)
     ksp(libs.hilt.compiler)
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
 
     testImplementation(libs.junit)
     testImplementation(libs.mockk.android)

@@ -4,13 +4,14 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringSetPreferencesKey
+import com.telogaspar.sports_sync_app.feature.sportsevent.data.model.BreedDao
 import com.telogaspar.sports_sync_app.feature.sportsevent.domain.entity.Type
 import com.telogaspar.sports_sync_app.feature.sportsevent.domain.repository.FavoriteListLocalDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 internal class FavoriteListLocalDataSourceImpl(
-    private val dataStore: DataStore<Preferences>
+    private val dataStore: DataStore<Preferences>,
 ) : FavoriteListLocalDataSource {
 
     companion object {
@@ -53,3 +54,4 @@ internal class FavoriteListLocalDataSourceImpl(
         }
     }
 }
+

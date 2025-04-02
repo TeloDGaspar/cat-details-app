@@ -65,6 +65,7 @@ dependencies {
     implementation(project(":core"))
 
     implementation(libs.androidx.runner)
+    implementation(libs.hilt.navigation.compose)
     ksp(libs.hilt.compiler)
 
     testImplementation(libs.junit)
@@ -75,6 +76,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     implementation(libs.hilt.android)
+    implementation(libs.androidx.navigation.compose)
 
     androidTestImplementation(libs.hilt.android.testing)
     androidTestImplementation(libs.androidx.ui.test.junit4)
